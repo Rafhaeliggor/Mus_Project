@@ -4,7 +4,7 @@ import json
 from PIL import Image, ImageTk
 from ctypes import windll, byref, sizeof, c_int
 import ctypes
-from HomePage import Home_func
+from Gui.HomePage import Home_func
 
 class Main(ctk.CTk):
     # Initial attributes
