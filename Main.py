@@ -5,6 +5,8 @@ from PIL import Image, ImageTk
 from ctypes import windll, byref, sizeof, c_int
 import ctypes
 from Gui.HomePage import Home_func
+from Gui.Sidebar import SideBar_func
+
 
 class Main(ctk.CTk):
     # Initial attributes
@@ -18,6 +20,7 @@ class Main(ctk.CTk):
 
         # Call the main screen
         Home_screen(self) 
+        SideBar_func(self)
 
         # run
         self.mainloop()
@@ -27,8 +30,10 @@ class Main(ctk.CTk):
         # Home screen
 class Home_screen():
     def __init__(self, parent):
-        print('entrou')
         Home_func(parent)
-        print('saiu')
+
+class Sidebar_screen():
+    def __init__(self, parent):
+        SideBar_func(parent)
 
 Main()
