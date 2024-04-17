@@ -11,13 +11,19 @@ class Home_func(ctk.CTkFrame):
         self.base(parent)
 
     def base(self, parent):
-        ctk.CTkFrame(parent, bg_color="#2F2F2F", fg_color="#2F2F2F").pack(fill="both", expand=True)
+        self.base = ctk.CTkFrame(parent, bg_color="#2F2F2F", fg_color="#2F2F2F")
+        self.base.pack(fill="both", expand=True)
         self.welcome_msg = ctk.CTkFrame(parent, bg_color="#2F2F2F", fg_color="#2F2F2F")
         self.welcome_settings()
         self.place_txt()
         
     def place_txt(self):
         self.welcome_msg.place(relx= 0.405, rely= 0.4, anchor='center')
+        self.destroy_txt()
+
+    def destroy_txt(self):
+        print('ok')
+        self.welcome_msg.destroy()
         
 
     def welcome_settings(self):
