@@ -4,13 +4,14 @@ import json
 from PIL import Image, ImageTk
 from ctypes import windll, byref, sizeof, c_int
 import ctypes
+from Gui import Home_func
 
 class SideBar_func(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
         def task_button(master):
-            botao_teste = ctk.CTkButton(master,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text='teste', command = lambda: print('Teste'), text_color="#454545")
+            botao_teste = ctk.CTkButton(master,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text='teste', command = Home_func.destroy_txt, text_color="#454545")
             botao_teste.pack(pady= 4)
         
 

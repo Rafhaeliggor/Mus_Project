@@ -4,8 +4,7 @@ import json
 from PIL import Image, ImageTk
 from ctypes import windll, byref, sizeof, c_int
 import ctypes
-from Gui.HomePage import Home_func
-from Gui.Sidebar import SideBar_func
+import Gui
 
 
 class Main(ctk.CTk):
@@ -19,8 +18,7 @@ class Main(ctk.CTk):
         self.bind('<Escape>', lambda event: self.quit())
 
         # Call the main screen
-        Home_screen(self) 
-        SideBar_func(self)
+        Home_screen(self)
 
         # run
         self.mainloop()
@@ -30,10 +28,8 @@ class Main(ctk.CTk):
         # Home screen
 class Home_screen():
     def __init__(self, parent):
-        Home_func(parent)
-
-class Sidebar_screen():
-    def __init__(self, parent):
-        SideBar_func(parent)
+        screen_Home = Gui.Screen(parent)  # Criar uma instância de Screen
+        screen_Home.sidebar()
+        screen_Home.welcome_msg()
 
 Main()
