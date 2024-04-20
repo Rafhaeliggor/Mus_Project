@@ -38,23 +38,23 @@ class Screen(ctk.CTkFrame):
         self.settings_screen()
 
     def settings_screen(self):
-        self.settings_frame = ctk.CTkFrame(self.parent, bg_color='red', fg_color='red')
+        self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
-        notes_space = ctk.CTkCanvas(self.settings_frame, height=200, width=400, bg='blue')
+        notes_space = ctk.CTkCanvas(self.settings_frame, height=200, width=400, bg='white')
         notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
-        ctk.CTkEntry(self.settings_frame, bg_color='white', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.45, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkEntry(self.settings_frame, bg_color='white', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.45, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Reading type
-        ctk.CTkButton(self.settings_frame, bg_color='white').place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
-        ctk.CTkButton(self.settings_frame, bg_color='white').place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646').place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646').place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
         
         ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.50, rely=0.45, relwidth=0.25, relheight=0.12, anchor='nw')
         ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.50, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Start
-        ctk.CTkButton(self.settings_frame, bg_color='white').place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646').place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
 
         self.settings_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
