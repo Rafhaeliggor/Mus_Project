@@ -10,6 +10,10 @@ class Screen(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         ctk.CTkFrame(parent, fg_color='#2F2F2F', bg_color='#2F2F2F').pack(fill="both", expand=True)
+        g_img = Image.open("img/key_simbol.png")
+        g_img.resize((50, 50))
+        self.key_g = ImageTk.PhotoImage(g_img)
+
 
     def sidebar(self):
         sidebar_var = ctk.CTkFrame(self.parent, width=200, height= 200, fg_color="#464646", bg_color="#2F2F2F")
@@ -43,18 +47,28 @@ class Screen(ctk.CTkFrame):
         notes_space = ctk.CTkCanvas(self.settings_frame, height=200, width=400, bg='white')
         notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
-        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.45, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12, anchor='nw')
+        #"Rounds"
+        ctk.CTkLabel(self.settings_frame, text='Rounds', font=('Roboto', 30, 'bold'), bg_color='transparent').place(relx=0.03, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.40, relwidth=0.25, relheight=0.12)
+
+        #"Time"
+        ctk.CTkLabel(self.settings_frame, text='Time', font=('Roboto', 30, 'bold'), bg_color='transparent').place(relx=0.01, rely=0.54, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12)
 
         #Reading type
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646').place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646').place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', image= self.key_g, text='').place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold')).place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
         
-        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.50, rely=0.45, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.50, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
+        #Linhas suplementares
+        ctk.CTkLabel(self.settings_frame, text='Extras lines', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.55, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.60, rely=0.40, relwidth=0.25, relheight=0.12, anchor='nw')
+
+        #Clave de Fá
+        ctk.CTkLabel(self.settings_frame, text='F KEY', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.52, rely=0.545, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Start
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646').place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start').place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
 
         self.settings_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
