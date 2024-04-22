@@ -22,11 +22,11 @@ class App(ctk.CTk):
             #Create size and position customizabable
             zx = 200
             zy = 300
-            t = 4
+            t = 1
 
             screenTest.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
-            #screenTest.create_aa_circle(x_pos=zx, y_pos=zy, radius=3, fill="red")
             screenTest.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+            #screenTest.create_aa_circle(x_pos=zx, y_pos=zy, radius=3, fill="red")
 
             #screenTest.create_oval((110, 450, 250, 350), fill="black")
             #screenTest.create_rectangle((250,150, 235, 400), fill="black")

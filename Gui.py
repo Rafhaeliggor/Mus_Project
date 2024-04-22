@@ -10,10 +10,14 @@ class Screen(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         ctk.CTkFrame(parent, fg_color='#2F2F2F', bg_color='#2F2F2F').pack(fill="both", expand=True)
+
+        p_img = Image.open("img/key_G_canvas.png")
+        p_img_red = p_img.resize((155, 155), Image.ANTIALIAS)   
+        self.key_p = ImageTk.PhotoImage(p_img_red)
+
         g_img = Image.open("img/key_simbol.png")
         g_img.resize((50, 50))
         self.key_g = ImageTk.PhotoImage(g_img)
-
 
     def sidebar(self):
         sidebar_var = ctk.CTkFrame(self.parent, width=200, height= 200, fg_color="#464646", bg_color="#2F2F2F")
@@ -44,7 +48,24 @@ class Screen(ctk.CTkFrame):
     def settings_screen(self):
         self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
-        notes_space = ctk.CTkCanvas(self.settings_frame, height=200, width=400, bg='white')
+        #Canvas
+        notes_space = ctk.CTkCanvas(self.settings_frame, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
+    
+        #Pentagram
+        for c in range(0,5):
+            notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
+
+        #Key
+        notes_space.create_image(60,25, anchor='n', image=self.key_p)
+
+        #Note
+        zx = 200
+        zy = 120
+        t = 2
+        
+        notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black", outline="red", width=1)
+        notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+        
         notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
         #"Rounds"
