@@ -11,6 +11,14 @@ class Screen(ctk.CTkFrame):
         self.parent = parent
         ctk.CTkFrame(parent, fg_color='#2F2F2F', bg_color='#2F2F2F').pack(fill="both", expand=True)
 
+        #variables
+        self.rounds_var = tk.IntVar()
+        self.time_var = tk.IntVar()
+        self.apbt_notation_var = tk.BooleanVar()
+        self.solp_notation_var = tk.BooleanVar()
+        self.extra_lines_var = tk.BooleanVar()
+        self.f_key_var = tk.BooleanVar()
+
         p_img = Image.open("img/key_G_canvas.png")
         p_img_red = p_img.resize((155, 155), Image.ANTIALIAS)   
         self.key_p = ImageTk.PhotoImage(p_img_red)
@@ -44,6 +52,24 @@ class Screen(ctk.CTkFrame):
     def destroy_msg(self):
         self.msg_frame.destroy()
         self.settings_screen()
+    
+    def out_settings(self):
+        print(f"Rounds: {self.rounds_var.get()}")
+        print(f"Time: {self.time_var.get()}")
+        print(f"Alphabet Notation: {self.apbt_notation_var.get()}")
+        print(f"Extra lines: {self.extra_lines_var.get()}")
+        print(f"F key active: {self.f_key_var.get()}")
+
+
+    def alph_on(self):
+        self.apbt_notation_var.set(True)
+        self.solp_notation_var.set(False)
+        print('alphabet on')
+    
+    def alph_off(self):
+        self.apbt_notation_var.set(False)
+        self.solp_notation_var.set(True)
+        print('alpabet off')
 
     def settings_screen(self):
         self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
@@ -56,40 +82,41 @@ class Screen(ctk.CTkFrame):
             notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
 
         #Key
-        notes_space.create_image(60,25, anchor='n', image=self.key_p)
+        notes_space.create_image(60,25, anchor='n', image= self.key_p)
 
         #Note
         zx = 200
         zy = 120
         t = 2
         
-        notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black", outline="red", width=1)
+        notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
         notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
         
         notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
         #"Rounds"
         ctk.CTkLabel(self.settings_frame, text='Rounds', font=('Roboto', 30, 'bold'), bg_color='transparent').place(relx=0.03, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.40, relwidth=0.25, relheight=0.12)
+        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold'), textvariable=self.rounds_var).place(relx=0.10, rely=0.40, relwidth=0.25, relheight=0.12)
+
 
         #"Time"
         ctk.CTkLabel(self.settings_frame, text='Time', font=('Roboto', 30, 'bold'), bg_color='transparent').place(relx=0.01, rely=0.54, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold')).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12)
+        ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold'), textvariable=self.time_var).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12)
 
         #Reading type
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', image= self.key_g, text='').place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold')).place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', image= self.key_g, text='', command=self.alph_off).place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold'), command=self.alph_on).place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
         
-        #Linhas suplementares
+        #Extras lines
         ctk.CTkLabel(self.settings_frame, text='Extras lines', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.55, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.60, rely=0.40, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70, variable=self.extra_lines_var).place(relx=0.60, rely=0.40, relwidth=0.25, relheight=0.12, anchor='nw')
 
-        #Clave de Fá
+        #F key
         ctk.CTkLabel(self.settings_frame, text='F KEY', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.52, rely=0.545, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70, variable=self.f_key_var).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Start
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start').place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command=self.out_settings).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
 
         self.settings_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
