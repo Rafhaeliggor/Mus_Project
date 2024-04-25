@@ -104,8 +104,8 @@ class Screen(ctk.CTkFrame):
         ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold'), textvariable=self.time_var).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12)
 
         #Reading type
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', image= self.key_g, text='', command=self.alph_off).place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold'), command=self.alph_on).place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        self.key_alph_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', image= self.key_g, text='', command=self.alph_off).place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        self.key_solp_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold'), command=self.alph_on).place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
         
         #Extras lines
         ctk.CTkLabel(self.settings_frame, text='Extras lines', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.55, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
@@ -116,10 +116,23 @@ class Screen(ctk.CTkFrame):
         ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70, variable=self.f_key_var).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Start
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command=self.out_settings).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command=self.var_screen).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
 
         self.settings_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
+    def destroy_settings(self):
+        self.settings_frame.destroy()
 
+    def var_screen(self):
+        self.destroy_settings()
+        self.var_frame = ctk.CTkFrame(self.parent)
 
-        
+        ctk.CTkLabel(self.var_frame, text=(f"Rounds: {self.rounds_var.get()}")).pack()
+        ctk.CTkLabel(self.var_frame, text=(f"Time: {self.time_var.get()}")).pack()
+        ctk.CTkLabel(self.var_frame, text=(f"Alphabet notation: {self.apbt_notation_var.get()}")).pack()
+        ctk.CTkLabel(self.var_frame, text=(f"Extra lines: {self.extra_lines_var.get()}")).pack()
+        ctk.CTkLabel(self.var_frame, text=(f"F key: {self.f_key_var.get()}")).pack()
+
+        self.var_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
+    
+
