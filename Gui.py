@@ -78,8 +78,14 @@ class Screen(ctk.CTkFrame):
         self.note_draw(200, 120, 2)
     
     def note_draw(self, zx, zy, t):
-        self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
-        self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+        self.oval_note = self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
+        self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+        self.blank_canvas()
+
+    def blank_canvas(self):
+        self.notes_space.delete(self.oval_note)
+        self.notes_space.delete(self.rectangle_note)
+        
 
     def settings_screen(self):
         self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
