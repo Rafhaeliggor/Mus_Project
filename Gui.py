@@ -134,5 +134,38 @@ class Screen(ctk.CTkFrame):
         ctk.CTkLabel(self.var_frame, text=(f"F key: {self.f_key_var.get()}")).pack()
 
         self.var_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
-    
 
+    def mode_1_screen(self):
+        self.mode1_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
+
+        #Canvas
+        notes_space = ctk.CTkCanvas(self.mode1_frame, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
+    
+        #Pentagram
+        for c in range(0,5):
+            notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
+
+        #Key
+        notes_space.create_image(60,25, anchor='n', image= self.key_p)
+
+        #Note
+        zx = 200
+        zy = 120
+        t = 2
+
+        notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
+        notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+
+        notes_space.place(relx=0.5, rely=0.2, anchor='center')
+
+        c_button = ctk.CTkButton(self.mode1_frame, text='C', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('C')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        d_button = ctk.CTkButton(self.mode1_frame, text='D', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('D')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        e_button = ctk.CTkButton(self.mode1_frame, text='E', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('E')).place(relx=0.31, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        f_button = ctk.CTkButton(self.mode1_frame, text='F', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('F')).place(relx=0.51, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        g_button = ctk.CTkButton(self.mode1_frame, text='G', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('G')).place(relx=0.61, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        a_button = ctk.CTkButton(self.mode1_frame, text='A', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('A')).place(relx=0.71, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        b_button = ctk.CTkButton(self.mode1_frame, text='B', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('B')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT', command= lambda: print("Exit")).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
+        self.mode1_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
+
+    

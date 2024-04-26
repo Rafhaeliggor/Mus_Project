@@ -30,6 +30,6 @@ class Home_screen():
     def __init__(self, parent):
         screen_Home = Gui.Screen(parent)  # Criar uma instância de Screen
         screen_Home.sidebar()
-        screen_Home.settings_screen()
+        screen_Home.mode_1_screen()
 
 Main()
