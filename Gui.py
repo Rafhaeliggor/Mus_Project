@@ -71,28 +71,37 @@ class Screen(ctk.CTkFrame):
         self.solp_notation_var.set(True)
         print('alpabet off')
 
+    def create_canvas_base(self, parent):
+        self.notes_space = ctk.CTkCanvas(parent, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
+        for c in range(0,5):
+            self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
+        self.note_draw(200, 120, 2)
+    
+    def note_draw(self, zx, zy, t):
+        self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
+        self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+
     def settings_screen(self):
         self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
         #Canvas
-        notes_space = ctk.CTkCanvas(self.settings_frame, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
     
         #Pentagram
         for c in range(0,5):
-            notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
+            self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
 
         #Key
-        notes_space.create_image(60,25, anchor='n', image= self.key_p)
+        self.notes_space.create_image(60,25, anchor='n', image= self.key_p)
 
         #Note
         zx = 200
         zy = 120
         t = 2
         
-        notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
-        notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+        self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
+        self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
         
-        notes_space.place(relx=0.5, rely=0.2, anchor='center')
+        self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
         #"Rounds"
         ctk.CTkLabel(self.settings_frame, text='Rounds', font=('Roboto', 30, 'bold'), bg_color='transparent').place(relx=0.03, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
@@ -134,29 +143,29 @@ class Screen(ctk.CTkFrame):
         ctk.CTkLabel(self.var_frame, text=(f"F key: {self.f_key_var.get()}")).pack()
 
         self.var_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
+    
+    #def pentagram_draw(self, parent):
+
+    #def gey_g_draw(self, parent):
+
 
     def mode_1_screen(self):
         self.mode1_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
         #Canvas
-        notes_space = ctk.CTkCanvas(self.mode1_frame, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
-    
-        #Pentagram
-        for c in range(0,5):
-            notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
+        self.create_canvas_base(self.mode1_frame)
 
         #Key
-        notes_space.create_image(60,25, anchor='n', image= self.key_p)
+        self.notes_space.create_image(60,25, anchor='n', image= self.key_p)
 
         #Note
         zx = 200
         zy = 120
         t = 2
 
-        notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
-        notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+        self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
-        notes_space.place(relx=0.5, rely=0.2, anchor='center')
+        ctk.CTkLabel(self.mode1_frame, text='X / Y', font=('Roboto', 30, 'bold'), text_color="#D9D9D9").place(anchor='w', rely=0.05, relx= 0.90)
 
         c_button = ctk.CTkButton(self.mode1_frame, text='C', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('C')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
         d_button = ctk.CTkButton(self.mode1_frame, text='D', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: print('D')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
