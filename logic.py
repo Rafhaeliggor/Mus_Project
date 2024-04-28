@@ -2,7 +2,7 @@ import random
 
 class notes_system():
     def __init__(self):
-        # G keys
+        #G keys
         self.notes_list = ['1G','1A','1B','C','D','E','F','G','A','B','C1','D1','E1','F1','G1','A1','B1','C2','D2']
 
         #normal 3->14(+1)

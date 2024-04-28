@@ -19,6 +19,8 @@ class Screen(ctk.CTkFrame):
         self.extra_lines_var = tk.BooleanVar()
         self.f_key_var = tk.BooleanVar()
 
+        self.keyboard_asw = ['a','s','d','h','j','k','l']
+
         p_img = Image.open("img/key_G_canvas.png")
         p_img_red = p_img.resize((155, 155), Image.ANTIALIAS)   
         self.key_p = ImageTk.PhotoImage(p_img_red)
@@ -26,7 +28,7 @@ class Screen(ctk.CTkFrame):
         g_img = Image.open("img/key_simbol.png")
         g_img.resize((50, 50))
         self.key_g = ImageTk.PhotoImage(g_img)
-
+        
     def sidebar(self):
         sidebar_var = ctk.CTkFrame(self.parent, width=200, height= 200, fg_color="#464646", bg_color="#2F2F2F")
         sidebar_var.place(relx = 0.81, rely= 0.025, relheight=0.95, relwidth=0.18, anchor='nw')
@@ -91,10 +93,9 @@ class Screen(ctk.CTkFrame):
         self.notes_space.delete(self.rectangle_note)
         self.notes_space.delete(self.g_key_var)
         
-    def get_answer_note(self, awr):
-        print(f'Note {awr} was pressed')
-
-
+    def get_answer_note(self, char):
+        if char in self.keyboard_asw:
+            print(f'Note {char} was pressed')
 
 
     def settings_screen(self):
@@ -189,6 +190,7 @@ class Screen(ctk.CTkFrame):
         g_button = ctk.CTkButton(self.mode1_frame, text='G', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('G')).place(relx=0.61, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
         a_button = ctk.CTkButton(self.mode1_frame, text='A', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('A')).place(relx=0.71, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
         b_button = ctk.CTkButton(self.mode1_frame, text='B', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('B')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+
 
         exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT', command= lambda: print("Exit")).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
         self.mode1_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
