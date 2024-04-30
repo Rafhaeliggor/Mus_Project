@@ -20,6 +20,7 @@ class notes_system():
     def random_note(self):
         rand = random.randrange(0, 19)
         sup = 0
+        rev = False
         print(self.notes_list[rand])
         if rand <= 3:
             sup = -1
@@ -30,8 +31,12 @@ class notes_system():
             sup = 1
             if rand >= 17:
                 sup = 2
+            
+        if rand > 9:
+            rev = True
 
-        return [rand, sup]
+
+        return [rand, sup, rev]
 
     def random_key(self):
         rand = random.randrange(1,3)

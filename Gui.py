@@ -4,6 +4,7 @@ import json
 from PIL import Image, ImageTk
 from ctypes import windll, byref, sizeof, c_int
 import ctypes
+import logic
 
 class Screen(ctk.CTkFrame):
     def __init__(self, parent):
@@ -77,43 +78,71 @@ class Screen(ctk.CTkFrame):
         self.notes_space = ctk.CTkCanvas(parent, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
         for c in range(0,5):
             self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
-        self.note_draw_rev(200, 120, 2)
-        self.g_key_draw()
-
-        self.extra_lines(4)
     
-    def note_draw(self, zx, zy, t):
-        self.oval_note = self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
-        self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+        self.note_draw(zx = 200, zy= 190, t = 2, note = 0, rev= False)
+        self.key_draw('g')
 
-    def note_draw_rev(self, zx, zy, t):
-        self.oval_note = self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
-        self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,zy+25*t,zx+7*t,zy), fill="black")
+        self.extra_lines(0)
+    
+    def note_draw(self, zx, zy, t, note, rev = False):
+        if rev == False:
+            self.oval_note = self.notes_space.create_oval((zx-7*t, (zy-5*t)-note*10, zx+7*t, (zy+5*t)-note*10), fill="black")
+            self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,(zy-25*t)-note*10,zx+7*t,zy-note*10), fill="black")
+
+        if rev == True:
+            self.oval_note = self.notes_space.create_oval((zx-7*t, (zy-5*t)-note*10, zx+7*t, (zy+5*t)-note*10), fill="black")
+            self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,(zy+25*t)-note*10,zx+7*t,zy-note*10), fill="black")
 
     def extra_lines(self, amnt):
+        self.extra1 = self.notes_space.create_rectangle((0, 1, 1, 0), fill="white")
+        self.extra2 = self.notes_space.create_rectangle((0, 1, 1, 0), fill="white")
+        self.extra3 = self.notes_space.create_rectangle((0, 1, 1, 0), fill="white")
+        self.extra4 = self.notes_space.create_rectangle((0, 1, 1, 0), fill="white")
 
-        if amnt == 2 or amnt == 1:
-            self.notes_space.create_rectangle((175,60+(5*20),225,60+(5*20)), fill="black")
-            if amnt == 1:
-                self.notes_space.create_rectangle((175,60+(6*20),225,60+(6*20)), fill="black")
+        if amnt == 0:
+            print('Nothin to supply')
 
-        elif amnt == 3 or 4:
-            self.notes_space.create_rectangle((175,20+(1*20),225,20+(1*20)), fill="red")
-            if amnt == 4:
-                self.notes_space.create_rectangle((175,20+(0*20),225,20+(0*20)), fill="red")
+        elif amnt == -1 or amnt == -2:
+            self.extra1 = self.notes_space.create_rectangle((175,60+(5*20),225,60+(5*20)), fill="black")
+            if amnt == -2:
+                self.extra2 = self.notes_space.create_rectangle((175,60+(6*20),225,60+(6*20)), fill="black")
 
-    def g_key_draw(self):
-        self.g_key_var = self.notes_space.create_image(60,25, anchor='n', image= self.key_p)
+        elif amnt == 1 or 2:
+            self.extra3 = self.notes_space.create_rectangle((175,20+(1*20),225,20+(1*20)), fill="black")
+            if amnt == 2:
+                self.extra4 = self.notes_space.create_rectangle((175,20+(0*20),225,20+(0*20)), fill="black")
+        
+
+    def key_draw(self, key):
+        if key == 'g':
+            self.g_key_var = self.notes_space.create_image(60,25, anchor='n', image= self.key_p)
 
     def blank_canvas(self):
+        self.notes_space.delete(self.extra1)
+        self.notes_space.delete(self.extra2)
+        self.notes_space.delete(self.extra3)
+        self.notes_space.delete(self.extra4)    
+
         self.notes_space.delete(self.oval_note)
         self.notes_space.delete(self.rectangle_note)
         self.notes_space.delete(self.g_key_var)
+
         
     def get_answer_note(self, char):
         if char in self.keyboard_asw:
             print(f'Note {char} was pressed')
-            self.blank_canvas()
+            self.reset_canvas()
+
+    def reset_canvas(self):
+        self.blank_canvas()
+        self.key_draw('g')
+
+        new_note = logic.notes_system()
+        note_list = new_note.random_note()
+        
+        self.extra_lines(note_list[1])
+
+        self.note_draw(zx = 200, zy= 190, t = 2, note = note_list[0], rev= note_list[2])
 
 
     def settings_screen(self):
@@ -202,13 +231,13 @@ class Screen(ctk.CTkFrame):
 
         ctk.CTkLabel(self.mode1_frame, text='X / Y', font=('Roboto', 30, 'bold'), text_color="#D9D9D9").place(anchor='w', rely=0.05, relx= 0.90)
 
-        c_button = ctk.CTkButton(self.mode1_frame, text='C', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('C')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        d_button = ctk.CTkButton(self.mode1_frame, text='D', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('D')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        e_button = ctk.CTkButton(self.mode1_frame, text='E', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('E')).place(relx=0.31, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        f_button = ctk.CTkButton(self.mode1_frame, text='F', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('F')).place(relx=0.51, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        g_button = ctk.CTkButton(self.mode1_frame, text='G', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('G')).place(relx=0.61, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        a_button = ctk.CTkButton(self.mode1_frame, text='A', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('A')).place(relx=0.71, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        b_button = ctk.CTkButton(self.mode1_frame, text='B', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('B')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        c_button = ctk.CTkButton(self.mode1_frame, text='C', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('a')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        d_button = ctk.CTkButton(self.mode1_frame, text='D', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('s')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        e_button = ctk.CTkButton(self.mode1_frame, text='E', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('d')).place(relx=0.31, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        f_button = ctk.CTkButton(self.mode1_frame, text='F', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('h')).place(relx=0.51, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        g_button = ctk.CTkButton(self.mode1_frame, text='G', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('j')).place(relx=0.61, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        a_button = ctk.CTkButton(self.mode1_frame, text='A', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('k')).place(relx=0.71, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        b_button = ctk.CTkButton(self.mode1_frame, text='B', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('l')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
 
 
         exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT', command= lambda: print("Exit")).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
