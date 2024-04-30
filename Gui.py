@@ -79,11 +79,24 @@ class Screen(ctk.CTkFrame):
             self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
         self.note_draw(200, 120, 2)
         self.g_key_draw()
-        self.blank_canvas()
+
+        self.extra_lines(4)
     
     def note_draw(self, zx, zy, t):
         self.oval_note = self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
         self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+
+    def extra_lines(self, amnt):
+
+        if amnt == 2 or amnt == 1:
+            self.notes_space.create_rectangle((175,60+(5*20),225,60+(5*20)), fill="black")
+            if amnt == 1:
+                self.notes_space.create_rectangle((175,60+(6*20),225,60+(6*20)), fill="black")
+
+        elif amnt == 3 or 4:
+            self.notes_space.create_rectangle((175,20+(1*20),225,20+(1*20)), fill="red")
+            if amnt == 4:
+                self.notes_space.create_rectangle((175,20+(0*20),225,20+(0*20)), fill="red")
 
     def g_key_draw(self):
         self.g_key_var = self.notes_space.create_image(60,25, anchor='n', image= self.key_p)
@@ -161,6 +174,7 @@ class Screen(ctk.CTkFrame):
 
         self.var_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
     
+
     #def pentagram_draw(self, parent):
 
     #def gey_g_draw(self, parent):

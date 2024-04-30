@@ -5,6 +5,7 @@ class MyApp(tk.Tk):
         super().__init__()
         self.geometry('400x200')
         self.bind('<Key>', self.on_key_press)
+        self.test_instance = Test()
 
     def on_key_press(self, event):
         Test.call_the_other(char = event.char)
