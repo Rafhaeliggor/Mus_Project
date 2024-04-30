@@ -77,7 +77,7 @@ class Screen(ctk.CTkFrame):
         self.notes_space = ctk.CTkCanvas(parent, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
         for c in range(0,5):
             self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
-        self.note_draw(200, 120, 2)
+        self.note_draw_rev(200, 120, 2)
         self.g_key_draw()
 
         self.extra_lines(4)
@@ -85,6 +85,10 @@ class Screen(ctk.CTkFrame):
     def note_draw(self, zx, zy, t):
         self.oval_note = self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
         self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
+
+    def note_draw_rev(self, zx, zy, t):
+        self.oval_note = self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
+        self.rectangle_note = self.notes_space.create_rectangle((zx+5*t,zy+25*t,zx+7*t,zy), fill="black")
 
     def extra_lines(self, amnt):
 
@@ -109,6 +113,7 @@ class Screen(ctk.CTkFrame):
     def get_answer_note(self, char):
         if char in self.keyboard_asw:
             print(f'Note {char} was pressed')
+            self.blank_canvas()
 
 
     def settings_screen(self):
