@@ -149,18 +149,17 @@ class Screen(ctk.CTkFrame):
         
     def get_answer_note(self, char):
         if char in self.keyboard_asw:
-
-            #print(f'Answer: {char} \n Correct:self.{self.quest}')
             verify = self.new_note.verify_note(asw=char, quest= self.note_list[0])
-            self.add_points()
-            
+
+            if verify == True:
+                self.add_points()
+            elif verify == False:
+                print('Wrong')
             self.reset_canvas()
 
     def new_notes_key(self):
         self.new_note = logic.notes_system()
         self.note_list = self.new_note.random_note()
-
-        print(f'new_note[0]: {self.note_list[0]}')
 
     def reset_canvas(self):
         self.new_notes_key()

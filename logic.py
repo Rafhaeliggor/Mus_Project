@@ -41,6 +41,15 @@ class notes_system():
         return rand
     
     def verify_note(self, asw, quest):
-        print(f'Answer note: {asw} Actual note: {quest}')
+        asw_index = self.keyboard_notes.index(asw)
+        final_asw = self.simp_notes_list[asw_index]
+        print(f'Answer note: {final_asw} Actual note: {self.simp_notes_list[quest]}')
+        
+        if final_asw == self.simp_notes_list[quest]:
+            print('Enter True')
+            return True
+        else:
+            print('Enter False')
+            return False
 
 notes_system()
