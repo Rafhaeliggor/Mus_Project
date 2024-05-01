@@ -22,13 +22,20 @@ class Screen(ctk.CTkFrame):
 
         self.keyboard_asw = ['a','s','d','h','j','k','l']
 
+        #G_key_img
         p_img = Image.open("img/key_G_canvas.png")
         p_img_red = p_img.resize((155, 155), Image.ANTIALIAS)   
         self.key_p = ImageTk.PhotoImage(p_img_red)
 
+        #F_key_img
+        p2_img = Image.open("img/F_key_png.png")
+        p2_img_red = p2_img.resize((61, 61), Image.ANTIALIAS)   
+        self.key_f = ImageTk.PhotoImage(p2_img_red)
+
         g_img = Image.open("img/key_simbol.png")
         g_img.resize((50, 50))
         self.key_g = ImageTk.PhotoImage(g_img)
+
         
     def sidebar(self):
         sidebar_var = ctk.CTkFrame(self.parent, width=200, height= 200, fg_color="#464646", bg_color="#2F2F2F")
@@ -80,7 +87,7 @@ class Screen(ctk.CTkFrame):
             self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
     
         self.note_draw(zx = 200, zy= 190, t = 2, note = 0, rev= False)
-        self.key_draw('g')
+        self.key_draw('f')
 
         self.extra_lines(0)
     
@@ -114,8 +121,14 @@ class Screen(ctk.CTkFrame):
         
 
     def key_draw(self, key):
+        self.g_key_var = self.notes_space.create_rectangle((0, 1, 1, 0), fill="white")
+        self.f_key_var = self.notes_space.create_rectangle((0, 1, 1, 0), fill="white")
+
         if key == 'g':
             self.g_key_var = self.notes_space.create_image(60,25, anchor='n', image= self.key_p)
+
+        elif key == 'f':
+            self.f_key_var = self.notes_space.create_image(60,61, anchor='n', image= self.key_f)
 
     def blank_canvas(self):
         self.notes_space.delete(self.extra1)
@@ -126,6 +139,7 @@ class Screen(ctk.CTkFrame):
         self.notes_space.delete(self.oval_note)
         self.notes_space.delete(self.rectangle_note)
         self.notes_space.delete(self.g_key_var)
+        self.notes_space.delete(self.f_key_var)
 
         
     def get_answer_note(self, char):
