@@ -10,8 +10,6 @@ class notes_system():
         self.notes_1 = self.random_note()
         self.notes_2 = self.random_note()
 
-        self.verify_note(self.notes_1, self.notes_2)
-
         #normal 3->14(+1)
         #complete 0->18(+1)
         #if note less or equal to index 3, make 1 suplementary line bellow, if its less or igual to 1, make another one
@@ -21,7 +19,6 @@ class notes_system():
         rand = random.randrange(0, 19)
         sup = 0
         rev = False
-        print(self.notes_list[rand])
         if rand <= 3:
             sup = -1
             if rand <=1:
@@ -44,6 +41,6 @@ class notes_system():
         return rand
     
     def verify_note(self, asw, quest):
-        print(f'First note: {asw[0]} Second note: {quest[0]}')
+        print(f'Answer note: {asw} Actual note: {quest}')
 
 notes_system()

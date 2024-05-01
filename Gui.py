@@ -20,6 +20,8 @@ class Screen(ctk.CTkFrame):
         self.extra_lines_var = tk.BooleanVar()
         self.f_key_var = tk.BooleanVar()
 
+        self.points = 0
+
         self.keyboard_asw = ['a','s','d','h','j','k','l']
 
         #G_key_img
@@ -82,12 +84,15 @@ class Screen(ctk.CTkFrame):
         print('alpabet off')
 
     def create_canvas_base(self, parent):
+        #pentagram
         self.notes_space = ctk.CTkCanvas(parent, height=200, width=400, bg='white', borderwidth=0, highlightthickness=0)
         for c in range(0,5):
             self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
     
-        self.note_draw(zx = 200, zy= 190, t = 2, note = 0, rev= False)
-        self.key_draw('f')
+        self.new_notes_key()
+
+        self.note_draw(zx = 200, zy= 190, t = 2, note = self.note_list[0], rev= self.note_list[2])
+        self.key_draw('g')
 
         self.extra_lines(0)
     
@@ -107,7 +112,7 @@ class Screen(ctk.CTkFrame):
         self.extra4 = self.notes_space.create_rectangle((0, 1, 1, 0), fill="white")
 
         if amnt == 0:
-            print('Nothin to supply')
+            print('')
 
         elif amnt == -1 or amnt == -2:
             self.extra1 = self.notes_space.create_rectangle((175,60+(5*20),225,60+(5*20)), fill="black")
@@ -144,19 +149,32 @@ class Screen(ctk.CTkFrame):
         
     def get_answer_note(self, char):
         if char in self.keyboard_asw:
-            print(f'Note {char} was pressed')
+
+            #print(f'Answer: {char} \n Correct:self.{self.quest}')
+            verify = self.new_note.verify_note(asw=char, quest= self.note_list[0])
+            self.add_points()
+            
             self.reset_canvas()
 
+    def new_notes_key(self):
+        self.new_note = logic.notes_system()
+        self.note_list = self.new_note.random_note()
+
+        print(f'new_note[0]: {self.note_list[0]}')
+
     def reset_canvas(self):
+        self.new_notes_key()
+
         self.blank_canvas()
         self.key_draw('g')
-
-        new_note = logic.notes_system()
-        note_list = new_note.random_note()
         
-        self.extra_lines(note_list[1])
+        self.extra_lines(self.note_list[1])
 
-        self.note_draw(zx = 200, zy= 190, t = 2, note = note_list[0], rev= note_list[2])
+        self.note_draw(zx = 200, zy= 190, t = 2, note = self.note_list[0], rev= self.note_list[2])
+    
+    def add_points(self):
+        self.points += 1
+        self.points_var_label.configure(text=f'Points: {self.points}')
 
 
     def settings_screen(self):
@@ -244,6 +262,8 @@ class Screen(ctk.CTkFrame):
         self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
         ctk.CTkLabel(self.mode1_frame, text='X / Y', font=('Roboto', 30, 'bold'), text_color="#D9D9D9").place(anchor='w', rely=0.05, relx= 0.90)
+        self.points_var_label = ctk.CTkLabel(self.mode1_frame, text= f'Points: {self.points}', font=('Roboto', 30, 'bold'), text_color="#D9D9D9")
+        self.points_var_label.place(anchor='w', rely=0.05, relx= 0.05)
 
         c_button = ctk.CTkButton(self.mode1_frame, text='C', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('a')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
         d_button = ctk.CTkButton(self.mode1_frame, text='D', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('s')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
