@@ -21,6 +21,8 @@ class Screen(ctk.CTkFrame):
         self.f_key_var = tk.BooleanVar()
 
         self.points = 0
+        self.total_tasks = 10
+        self.tasks_completed = 0
 
         self.keyboard_asw = ['a','s','d','h','j','k','l']
 
@@ -155,7 +157,24 @@ class Screen(ctk.CTkFrame):
                 self.add_points()
             elif verify == False:
                 print('Wrong')
-            self.reset_canvas()
+            
+            ask_continue = self.continue_check()
+            print(f'ask_continue == {ask_continue}')
+            if ask_continue == True:
+                self.reset_canvas()
+            elif ask_continue == False:
+                self.destroy_mode1()
+                
+    def continue_check(self):
+        print(f'Enter the continue check, totalcomplete: {self.tasks_completed}')
+        self.tasks_completed += 1
+
+        self.show_tasks_count.configure(text=f'{self.tasks_completed} / {self.total_tasks}')
+
+        if self.total_tasks <= self.tasks_completed:
+            return False
+        else:
+            return True
 
     def new_notes_key(self):
         self.new_note = logic.notes_system()
@@ -260,7 +279,9 @@ class Screen(ctk.CTkFrame):
 
         self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
-        ctk.CTkLabel(self.mode1_frame, text='X / Y', font=('Roboto', 30, 'bold'), text_color="#D9D9D9").place(anchor='w', rely=0.05, relx= 0.90)
+        self.show_tasks_count = ctk.CTkLabel(self.mode1_frame, text=f'{self.tasks_completed} / {self.total_tasks}', font=('Roboto', 30, 'bold'), text_color="#D9D9D9")
+        self.show_tasks_count.place(anchor='w', rely=0.05, relx= 0.90)
+        
         self.points_var_label = ctk.CTkLabel(self.mode1_frame, text= f'Points: {self.points}', font=('Roboto', 30, 'bold'), text_color="#D9D9D9")
         self.points_var_label.place(anchor='w', rely=0.05, relx= 0.05)
 
@@ -276,4 +297,6 @@ class Screen(ctk.CTkFrame):
         exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT', command= lambda: print("Exit")).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
         self.mode1_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
+    def destroy_mode1(self):
+        self.mode1_frame.destroy()
     
