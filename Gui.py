@@ -48,10 +48,10 @@ class Screen(ctk.CTkFrame):
         esfera.pack(pady=15)
 
         for c in range (0,5):
-            botao_teste = ctk.CTkButton(sidebar_var,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text='teste', command = self.destroy_msg, text_color="#454545")
+            botao_teste = ctk.CTkButton(sidebar_var,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text=f'test{c+1}', command = self.destroy_msg, text_color="#454545")
             botao_teste.pack(pady= 4)
 
-        ctk.CTkButton(sidebar_var, hover_color="#A0A0A0" ,text="Sair", height=100, width=100, fg_color='#D9D9D9', text_color="#454545", command= lambda: self.quit()).place(relx= 0.7, rely=0.9, relwidth=0.25, relheight=0.09, anchor='nw')
+        ctk.CTkButton(sidebar_var, hover_color="#A0A0A0" ,text="Leave", height=100, width=100, fg_color='#D9D9D9', text_color="#454545", command= lambda: self.quit()).place(relx= 0.7, rely=0.9, relwidth=0.25, relheight=0.09, anchor='nw')
     
     def welcome_msg(self):
         self.msg_frame = ctk.CTkFrame(self.parent, fg_color='#2F2F2F', bg_color='#2F2F2F')
@@ -94,7 +94,7 @@ class Screen(ctk.CTkFrame):
         self.note_draw(zx = 200, zy= 190, t = 2, note = self.note_list[0], rev= self.note_list[2])
         self.key_draw('g')
 
-        self.extra_lines(0)
+        self.extra_lines(self.note_list[1])
     
     def note_draw(self, zx, zy, t, note, rev = False):
         if rev == False:
