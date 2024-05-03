@@ -243,11 +243,11 @@ class Screen(ctk.CTkFrame):
 
         self.settings_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
-    def destroy_settings(self):
-        self.settings_frame.destroy()
+
 
     def var_screen(self):
-        self.destroy_settings()
+        self.delete_general_screen(self.settings_frame)
+
         self.var_frame = ctk.CTkFrame(self.parent)
 
         ctk.CTkLabel(self.var_frame, text=(f"Rounds: {self.rounds_var.get()}")).pack()
@@ -297,14 +297,15 @@ class Screen(ctk.CTkFrame):
         exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT', command= lambda: print("Exit")).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
         self.mode1_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
-    def destroy_mode1(self):
-        self.mode1_frame.destroy()
-
     def resume_mode1(self):
-        self.destroy_mode1()
+        self.delete_general_screen(self.mode1_frame)
 
         self.resume_screen = ctk.CTkFrame(self.parent)
         ctk.CTkLabel(self.resume_screen, text=f'Total of points: {self.points}').pack(expand=True, fill='both')
 
         self.resume_screen.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
+
+    def delete_general_screen(self, screen):
+        screen_var = screen
+        screen_var.destroy()
 
