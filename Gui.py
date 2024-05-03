@@ -163,7 +163,7 @@ class Screen(ctk.CTkFrame):
             if ask_continue == True:
                 self.reset_canvas()
             elif ask_continue == False:
-                self.destroy_mode1()
+                self.resume_mode1()
                 
     def continue_check(self):
         print(f'Enter the continue check, totalcomplete: {self.tasks_completed}')
@@ -299,4 +299,12 @@ class Screen(ctk.CTkFrame):
 
     def destroy_mode1(self):
         self.mode1_frame.destroy()
-    
+
+    def resume_mode1(self):
+        self.destroy_mode1()
+
+        self.resume_screen = ctk.CTkFrame(self.parent)
+        ctk.CTkLabel(self.resume_screen, text=f'Total of points: {self.points}').pack(expand=True, fill='both')
+
+        self.resume_screen.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
+
