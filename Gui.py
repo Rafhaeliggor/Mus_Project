@@ -21,7 +21,7 @@ class Screen(ctk.CTkFrame):
         self.f_key_var = tk.BooleanVar()
 
         self.points = 0
-        self.total_tasks = 10
+        self.total_tasks = 0
         self.tasks_completed = 0
 
         self.keyboard_asw = ['a','s','d','h','j','k','l']
@@ -45,13 +45,11 @@ class Screen(ctk.CTkFrame):
         sidebar_var = ctk.CTkFrame(self.parent, width=200, height= 200, fg_color="#464646", bg_color="#2F2F2F")
         sidebar_var.place(relx = 0.81, rely= 0.025, relheight=0.95, relwidth=0.18, anchor='nw')
 
-        esfera = ctk.CTkCanvas(master=sidebar_var, width=200, height= 200, bg="#464646", highlightbackground="#464646", highlightcolor="#464646")
-        esfera.create_aa_circle(fill='#D9D9D9',x_pos=100,y_pos=100,radius=95)
-        esfera.pack(pady=15)
+        sphere = ctk.CTkCanvas(master=sidebar_var, width=200, height= 200, bg="#464646", highlightbackground="#464646", highlightcolor="#464646")
+        sphere.create_aa_circle(fill='#D9D9D9',x_pos=100,y_pos=100,radius=95)
+        sphere.pack(pady=15)
 
-        for c in range (0,5):
-            botao_teste = ctk.CTkButton(sidebar_var,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text=f'test{c+1}', command = self.destroy_msg, text_color="#454545")
-            botao_teste.pack(pady= 4)
+        button_task1 = ctk.CTkButton(sidebar_var,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text=f'Read Pentagram', command = self.settings_screen, text_color="#454545").pack(pady=4)
 
         ctk.CTkButton(sidebar_var, hover_color="#A0A0A0" ,text="Leave", height=100, width=100, fg_color='#D9D9D9', text_color="#454545", command= lambda: self.quit()).place(relx= 0.7, rely=0.9, relwidth=0.25, relheight=0.09, anchor='nw')
     
@@ -61,11 +59,6 @@ class Screen(ctk.CTkFrame):
 
         ctk.CTkLabel(self.msg_frame, text="WELCOME", font=('Roboto', 80, 'bold'), text_color="#454545", bg_color="#2F2F2F").place(relx=0.5, rely= 0.4, anchor='center')
         ctk.CTkLabel(self.msg_frame, text="SELECT AN TASK", font=('Roboto', 30, 'bold'), text_color="#454545", bg_color="#2F2F2F").place(relx=0.5, rely=0.475, anchor='center')
-
-        
-    def destroy_msg(self):
-        self.msg_frame.destroy()
-        self.settings_screen()
     
     def out_settings(self):
         print(f"Rounds: {self.rounds_var.get()}")
@@ -196,26 +189,8 @@ class Screen(ctk.CTkFrame):
 
 
     def settings_screen(self):
+        self.delete_general_screen(self.msg_frame)
         self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
-
-        #Canvas
-    
-        #Pentagram
-        for c in range(0,5):
-            self.notes_space.create_rectangle((30,60+(c*20),365,60+(c*20)), fill="black")
-
-        #Key
-        self.notes_space.create_image(60,25, anchor='n', image= self.key_p)
-
-        #Note
-        zx = 200
-        zy = 120
-        t = 2
-        
-        self.notes_space.create_oval((zx-7*t, zy-5*t, zx+7*t, zy+5*t), fill="black")
-        self.notes_space.create_rectangle((zx+5*t,zy-25*t,zx+7*t,zy), fill="black")
-        
-        self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
         #"Rounds"
         ctk.CTkLabel(self.settings_frame, text='Rounds', font=('Roboto', 30, 'bold'), bg_color='transparent').place(relx=0.03, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
@@ -239,14 +214,13 @@ class Screen(ctk.CTkFrame):
         ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70, variable=self.f_key_var).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Start
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command=self.var_screen).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command=self.change_screen).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
 
         self.settings_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
 
 
     def var_screen(self):
-        self.delete_general_screen(self.settings_frame)
 
         self.var_frame = ctk.CTkFrame(self.parent)
 
@@ -259,23 +233,16 @@ class Screen(ctk.CTkFrame):
         self.var_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
     
 
-    #def pentagram_draw(self, parent):
-
-    #def gey_g_draw(self, parent):
-
+    def change_screen(self):
+        self.delete_general_screen(self.settings_frame)
+        self.total_tasks = self.rounds_var.get()
+        self.mode_1_screen()
 
     def mode_1_screen(self):
         self.mode1_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
         #Canvas
         self.create_canvas_base(self.mode1_frame)
-
-        #Key
-
-        #Note
-        zx = 200
-        zy = 120
-        t = 2
 
         self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
@@ -303,10 +270,20 @@ class Screen(ctk.CTkFrame):
         self.resume_screen = ctk.CTkFrame(self.parent)
         ctk.CTkLabel(self.resume_screen, text=f'Total of points: {self.points}').pack(expand=True, fill='both')
 
-        ctk.CTkButton(self.resume_screen, text='Main menu', bg_color='transparent', fg_color="#464646", font=('Roboto', 20)).place(anchor='center', relx=0.5, rely=0.9, relwidth=0.2, relheight=0.1)
-        ctk.CTkButton(self.resume_screen, text='Repeat', bg_color='transparent', fg_color="#464646", font=('Roboto', 20)).place(anchor='center', relx=0.1, rely=0.9, relwidth=0.1, relheight=0.1)
+        ctk.CTkButton(self.resume_screen, text='Main menu', bg_color='transparent', fg_color="#464646", font=('Roboto', 20), command= lambda: self.back_to_mainmenu(self.resume_screen)).place(anchor='center', relx=0.5, rely=0.9, relwidth=0.2, relheight=0.1)
+        ctk.CTkButton(self.resume_screen, text='Repeat', bg_color='transparent', fg_color="#464646", font=('Roboto', 20), command= lambda: self.repeat_task(screen_delete=self.resume_screen)).place(anchor='center', relx=0.1, rely=0.9, relwidth=0.1, relheight=0.1)
 
         self.resume_screen.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
+
+    def repeat_task(self, screen_delete, task=0):
+        self.points = 0
+        self.tasks_completed = 0 
+        self.delete_general_screen(screen_delete)
+        self.mode_1_screen()
+    
+    def back_to_mainmenu(self, screen_delete):
+        screen_delete.destroy()
+        self.welcome_msg()
 
     def delete_general_screen(self, screen):
         screen_var = screen
