@@ -303,6 +303,9 @@ class Screen(ctk.CTkFrame):
         self.resume_screen = ctk.CTkFrame(self.parent)
         ctk.CTkLabel(self.resume_screen, text=f'Total of points: {self.points}').pack(expand=True, fill='both')
 
+        ctk.CTkButton(self.resume_screen, text='Main menu', bg_color='transparent', fg_color="#464646", font=('Roboto', 20)).place(anchor='center', relx=0.5, rely=0.9, relwidth=0.2, relheight=0.1)
+        ctk.CTkButton(self.resume_screen, text='Repeat', bg_color='transparent', fg_color="#464646", font=('Roboto', 20)).place(anchor='center', relx=0.1, rely=0.9, relwidth=0.1, relheight=0.1)
+
         self.resume_screen.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
     def delete_general_screen(self, screen):
