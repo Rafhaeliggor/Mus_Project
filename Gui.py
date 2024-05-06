@@ -18,7 +18,7 @@ class Screen(ctk.CTkFrame):
         self.apbt_notation_var = tk.BooleanVar()
         self.solp_notation_var = tk.BooleanVar()
         self.extra_lines_var = tk.BooleanVar()
-        self.f_key_var = tk.BooleanVar()
+        self.f_key_var_able = tk.BooleanVar()
 
         self.points = 0
         self.total_tasks = 0
@@ -192,6 +192,9 @@ class Screen(ctk.CTkFrame):
         self.delete_general_screen(self.msg_frame)
         self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
+        self.create_canvas_base(self.settings_frame)
+        self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
+
         #"Rounds"
         ctk.CTkLabel(self.settings_frame, text='Rounds', font=('Roboto', 30, 'bold'), bg_color='transparent').place(relx=0.03, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
         ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold'), textvariable=self.rounds_var).place(relx=0.10, rely=0.40, relwidth=0.25, relheight=0.12)
@@ -211,7 +214,7 @@ class Screen(ctk.CTkFrame):
 
         #F key
         ctk.CTkLabel(self.settings_frame, text='F KEY', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.52, rely=0.545, relwidth=0.25, relheight=0.12, anchor='nw')
-        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70, variable=self.f_key_var).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
+        ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70, variable=self.f_key_var_able).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Start
         ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command=self.change_screen).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
@@ -243,7 +246,6 @@ class Screen(ctk.CTkFrame):
 
         #Canvas
         self.create_canvas_base(self.mode1_frame)
-
         self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
 
         self.show_tasks_count = ctk.CTkLabel(self.mode1_frame, text=f'{self.tasks_completed} / {self.total_tasks}', font=('Roboto', 30, 'bold'), text_color="#D9D9D9")
