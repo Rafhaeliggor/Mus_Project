@@ -239,9 +239,9 @@ class Screen(ctk.CTkFrame):
     def change_screen(self):
         self.delete_general_screen(self.settings_frame)
         self.total_tasks = self.rounds_var.get()
-        self.mode_1_screen()
+        self.mode_1_screen(read_alph = self.apbt_notation_var.get())
 
-    def mode_1_screen(self):
+    def mode_1_screen(self, read_alph):
         self.mode1_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
         #Canvas
@@ -254,13 +254,22 @@ class Screen(ctk.CTkFrame):
         self.points_var_label = ctk.CTkLabel(self.mode1_frame, text= f'Points: {self.points}', font=('Roboto', 30, 'bold'), text_color="#D9D9D9")
         self.points_var_label.place(anchor='w', rely=0.05, relx= 0.05)
 
-        c_button = ctk.CTkButton(self.mode1_frame, text='C', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('a')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        d_button = ctk.CTkButton(self.mode1_frame, text='D', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('s')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        e_button = ctk.CTkButton(self.mode1_frame, text='E', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('d')).place(relx=0.31, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        f_button = ctk.CTkButton(self.mode1_frame, text='F', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('h')).place(relx=0.51, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        g_button = ctk.CTkButton(self.mode1_frame, text='G', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('j')).place(relx=0.61, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        a_button = ctk.CTkButton(self.mode1_frame, text='A', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('k')).place(relx=0.71, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
-        b_button = ctk.CTkButton(self.mode1_frame, text='B', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('l')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        if read_alph == True:
+            c_button = ctk.CTkButton(self.mode1_frame, text='C', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('a')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            d_button = ctk.CTkButton(self.mode1_frame, text='D', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('s')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            e_button = ctk.CTkButton(self.mode1_frame, text='E', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('d')).place(relx=0.31, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            f_button = ctk.CTkButton(self.mode1_frame, text='F', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('h')).place(relx=0.51, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            g_button = ctk.CTkButton(self.mode1_frame, text='G', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('j')).place(relx=0.61, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            a_button = ctk.CTkButton(self.mode1_frame, text='A', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('k')).place(relx=0.71, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            b_button = ctk.CTkButton(self.mode1_frame, text='B', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('l')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+        elif read_alph == False:
+            c_button = ctk.CTkButton(self.mode1_frame, text='DO', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('a')).place(relx=0.11, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            d_button = ctk.CTkButton(self.mode1_frame, text='RE', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('s')).place(relx=0.21, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            e_button = ctk.CTkButton(self.mode1_frame, text='MI', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('d')).place(relx=0.31, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            f_button = ctk.CTkButton(self.mode1_frame, text='FA', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('h')).place(relx=0.51, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            g_button = ctk.CTkButton(self.mode1_frame, text='SOL', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('j')).place(relx=0.61, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            a_button = ctk.CTkButton(self.mode1_frame, text='LA', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('k')).place(relx=0.71, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
+            b_button = ctk.CTkButton(self.mode1_frame, text='SI', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('l')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
 
 
         exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT', command= lambda: print("Exit")).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
@@ -284,6 +293,8 @@ class Screen(ctk.CTkFrame):
         self.mode_1_screen()
     
     def back_to_mainmenu(self, screen_delete):
+        self.points = 0
+        self.tasks_completed = 0
         screen_delete.destroy()
         self.welcome_msg()
 
