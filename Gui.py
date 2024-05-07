@@ -142,13 +142,21 @@ class Screen(ctk.CTkFrame):
         self.notes_space.delete(self.f_key_var)
 
         
-    def get_answer_note(self, char):
+    def get_answer_note(self, char, none = False):
+        if (char == 'x') and none == True:
+            ask_continue = self.continue_check()
+            print(f'ask_continue == {ask_continue}')
+            if ask_continue == True:
+                self.reset_canvas()
+            elif ask_continue == False:
+                self.resume_mode1()
+
         if char in self.keyboard_asw:
             verify = self.new_note.verify_note(asw=char, quest= self.note_list[0])
 
             if verify == True:
                 self.add_points()
-            elif verify == False:
+            elif (verify == False):
                 print('Wrong')
             
             ask_continue = self.continue_check()
@@ -157,6 +165,8 @@ class Screen(ctk.CTkFrame):
                 self.reset_canvas()
             elif ask_continue == False:
                 self.resume_mode1()
+                
+        
                 
     def continue_check(self):
         print(f'Enter the continue check, totalcomplete: {self.tasks_completed}')
@@ -174,14 +184,16 @@ class Screen(ctk.CTkFrame):
         self.note_list = self.new_note.random_note()
 
     def reset_canvas(self):
+        self.blank_canvas()
+        
         self.new_notes_key()
 
-        self.blank_canvas()
         self.key_draw('g')
         
         self.extra_lines(self.note_list[1])
 
         self.note_draw(zx = 200, zy= 190, t = 2, note = self.note_list[0], rev= self.note_list[2])
+        self.counter(time= self.time_var.get())
     
     def add_points(self):
         self.points += 1
@@ -239,11 +251,25 @@ class Screen(ctk.CTkFrame):
     def change_screen(self):
         self.delete_general_screen(self.settings_frame)
         self.total_tasks = self.rounds_var.get()
-        self.mode_1_screen(read_alph = self.apbt_notation_var.get())
+        self.mode_1_screen(read_alph = self.apbt_notation_var.get(), totaltime=self.time_var.get())
 
-    def mode_1_screen(self, read_alph):
+    def counter(self, time):
+        if time >= 0:
+            self.counter_label.configure(text= f'Time: {time}')
+            self.after(1000, lambda: self.counter(time - 1))
+        else:
+            self.get_answer_note('x', none = True)
+            self.counter(time= self.time_var.get())
+
+    def mode_1_screen(self, read_alph, totaltime):
         self.mode1_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
+        #counter
+        print(f'Total time{totaltime}')
+        self.counter_label = ctk.CTkLabel(self.parent, text= f'Time: {totaltime}', font=('Roboto', 30, 'bold'), fg_color='transparent', bg_color='transparent')
+        self.counter_label.place(relx = 0.04, rely=0.1, anchor='w')
+
+        self.counter(totaltime)
         #Canvas
         self.create_canvas_base(self.mode1_frame)
         self.notes_space.place(relx=0.5, rely=0.2, anchor='center')

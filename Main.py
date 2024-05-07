@@ -37,6 +37,7 @@ class Home_screen():
         self.screen_Home = Gui.Screen(parent) 
         self.screen_Home.sidebar()
         self.screen_Home.welcome_msg()
+        
 
     def call_the_other(self, char):
         self.screen_Home.get_answer_note(char)
