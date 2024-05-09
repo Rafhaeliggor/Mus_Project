@@ -183,11 +183,7 @@ class Screen(ctk.CTkFrame):
         self.extra_lines(self.note_list[1])
 
         self.note_draw(zx = 200, zy= 190, t = 2, note = self.note_list[0], rev= self.note_list[2])
-        if answer == False:
-           self.counter(0)
-        else:
-            self.counter(0, reset=True)
-    
+
     def add_points(self):
         self.points += 1
         self.points_var_label.configure(text=f'Points: {self.points}')
@@ -245,20 +241,16 @@ class Screen(ctk.CTkFrame):
         self.delete_general_screen(self.settings_frame)
         self.total_tasks = self.rounds_var.get()
         self.mode_1_screen(read_alph = self.apbt_notation_var.get(), totaltime=self.time_var.get())
+        self.counter(time=self.time_var.get())
 
     def counter(self, time, reset = False):
         if time > 0:
             self.counter_label.configure(text= f'Time: {time}')
             self.after(1000, lambda: self.counter(time - 1))
-            self.counter_running = True
         else:
-            if reset == False:
-                print(f'Time get: {self.time_var.get()}')
-                self.get_answer_note('x', none = True)
-                self.counter(time= self.time_var.get())
-            if reset == True:
-                print(f'Time get: {self.time_var.get()}')
-                self.counter(time= self.time_var.get())
+            print(f'Time get: {self.time_var.get()}')
+            self.tasks_completed = self.total_tasks
+            self.resume_mode1()
 
     def mode_1_screen(self, read_alph, totaltime):
         self.mode1_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
@@ -267,7 +259,6 @@ class Screen(ctk.CTkFrame):
         self.counter_label = ctk.CTkLabel(self.parent, text= f'Time: {totaltime}', font=('Roboto', 30, 'bold'), fg_color='transparent', bg_color='transparent')
         self.counter_label.place(relx = 0.04, rely=0.1, anchor='w')
 
-        self.counter(totaltime)
         #Canvas
         self.create_canvas_base(self.mode1_frame)
         self.notes_space.place(relx=0.5, rely=0.2, anchor='center')
