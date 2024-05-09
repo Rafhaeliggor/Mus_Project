@@ -12,6 +12,9 @@ class Screen(ctk.CTkFrame):
         self.parent = parent
         ctk.CTkFrame(parent, fg_color='#2F2F2F', bg_color='#2F2F2F').pack(fill="both", expand=True)
 
+
+        self.counter_running = False
+
         #variables
         self.rounds_var = tk.IntVar()
         self.time_var = tk.IntVar()
@@ -59,24 +62,14 @@ class Screen(ctk.CTkFrame):
 
         ctk.CTkLabel(self.msg_frame, text="WELCOME", font=('Roboto', 80, 'bold'), text_color="#454545", bg_color="#2F2F2F").place(relx=0.5, rely= 0.4, anchor='center')
         ctk.CTkLabel(self.msg_frame, text="SELECT AN TASK", font=('Roboto', 30, 'bold'), text_color="#454545", bg_color="#2F2F2F").place(relx=0.5, rely=0.475, anchor='center')
-    
-    def out_settings(self):
-        print(f"Rounds: {self.rounds_var.get()}")
-        print(f"Time: {self.time_var.get()}")
-        print(f"Alphabet Notation: {self.apbt_notation_var.get()}")
-        print(f"Extra lines: {self.extra_lines_var.get()}")
-        print(f"F key active: {self.f_key_var.get()}")
-
 
     def alph_on(self):
         self.apbt_notation_var.set(True)
         self.solp_notation_var.set(False)
-        print('alphabet on')
     
     def alph_off(self):
         self.apbt_notation_var.set(False)
         self.solp_notation_var.set(True)
-        print('alpabet off')
 
     def create_canvas_base(self, parent):
         #pentagram
@@ -145,9 +138,8 @@ class Screen(ctk.CTkFrame):
     def get_answer_note(self, char, none = False):
         if (char == 'x') and none == True:
             ask_continue = self.continue_check()
-            print(f'ask_continue == {ask_continue}')
             if ask_continue == True:
-                self.reset_canvas()
+                self.reset_canvas(answer=True)
             elif ask_continue == False:
                 self.resume_mode1()
 
@@ -160,16 +152,14 @@ class Screen(ctk.CTkFrame):
                 print('Wrong')
             
             ask_continue = self.continue_check()
-            print(f'ask_continue == {ask_continue}')
             if ask_continue == True:
-                self.reset_canvas()
+                self.reset_canvas(answer=True)
             elif ask_continue == False:
                 self.resume_mode1()
                 
         
                 
     def continue_check(self):
-        print(f'Enter the continue check, totalcomplete: {self.tasks_completed}')
         self.tasks_completed += 1
 
         self.show_tasks_count.configure(text=f'{self.tasks_completed} / {self.total_tasks}')
@@ -183,7 +173,7 @@ class Screen(ctk.CTkFrame):
         self.new_note = logic.notes_system()
         self.note_list = self.new_note.random_note()
 
-    def reset_canvas(self):
+    def reset_canvas(self, answer = False):
         self.blank_canvas()
         
         self.new_notes_key()
@@ -193,7 +183,10 @@ class Screen(ctk.CTkFrame):
         self.extra_lines(self.note_list[1])
 
         self.note_draw(zx = 200, zy= 190, t = 2, note = self.note_list[0], rev= self.note_list[2])
-        self.counter(time= self.time_var.get())
+        if answer == False:
+           self.counter(0)
+        else:
+            self.counter(0, reset=True)
     
     def add_points(self):
         self.points += 1
@@ -253,19 +246,24 @@ class Screen(ctk.CTkFrame):
         self.total_tasks = self.rounds_var.get()
         self.mode_1_screen(read_alph = self.apbt_notation_var.get(), totaltime=self.time_var.get())
 
-    def counter(self, time):
-        if time >= 0:
+    def counter(self, time, reset = False):
+        if time > 0:
             self.counter_label.configure(text= f'Time: {time}')
             self.after(1000, lambda: self.counter(time - 1))
+            self.counter_running = True
         else:
-            self.get_answer_note('x', none = True)
-            self.counter(time= self.time_var.get())
+            if reset == False:
+                print(f'Time get: {self.time_var.get()}')
+                self.get_answer_note('x', none = True)
+                self.counter(time= self.time_var.get())
+            if reset == True:
+                print(f'Time get: {self.time_var.get()}')
+                self.counter(time= self.time_var.get())
 
     def mode_1_screen(self, read_alph, totaltime):
         self.mode1_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
         #counter
-        print(f'Total time{totaltime}')
         self.counter_label = ctk.CTkLabel(self.parent, text= f'Time: {totaltime}', font=('Roboto', 30, 'bold'), fg_color='transparent', bg_color='transparent')
         self.counter_label.place(relx = 0.04, rely=0.1, anchor='w')
 
