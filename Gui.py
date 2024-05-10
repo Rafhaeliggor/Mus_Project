@@ -305,7 +305,8 @@ class Screen(ctk.CTkFrame):
         self.points = 0
         self.tasks_completed = 0 
         self.delete_general_screen(screen_delete)
-        self.mode_1_screen()
+        self.mode_1_screen(read_alph = self.apbt_notation_var.get(), totaltime=self.time_var.get())
+        self.counter(time=self.time_var.get())
     
     def back_to_mainmenu(self, screen_delete):
         self.points = 0
