@@ -80,7 +80,7 @@ class Screen(ctk.CTkFrame):
         self.new_notes_key()
 
         self.note_draw(zx = 200, zy= 190, t = 2, note = self.note_list[0], rev= self.note_list[2])
-        self.key_draw('g')
+        self.key_draw(self.note_list[3])
 
         self.extra_lines(self.note_list[1])
     
@@ -144,7 +144,10 @@ class Screen(ctk.CTkFrame):
                 self.resume_mode1()
 
         if char in self.keyboard_asw:
-            verify = self.new_note.verify_note(asw=char, quest= self.note_list[0])
+            if self.note_list[3] == 'g':
+                verify = self.new_note.verify_note(asw=char, quest= self.note_list[0])
+            elif self.note_list[3] == 'f':
+                verify = self.new_note.verify_note(asw=char, quest= self.note_list[0],type_key='f')
 
             if verify == True:
                 self.add_points()
@@ -178,7 +181,7 @@ class Screen(ctk.CTkFrame):
         
         self.new_notes_key()
 
-        self.key_draw('g')
+        self.key_draw(self.note_list[3])
         
         self.extra_lines(self.note_list[1])
 

@@ -5,10 +5,13 @@ class notes_system():
         #G keys
         self.notes_list = ['1G','1A','1B','C','D','E','F','G','A','B','C1','D1','E1','F1','G1','A1','B1','C2','D2']
         self.simp_notes_list = ['G','A','B','C','D','E','F','G','A','B','C','D','E','F','G','A','B','C','D']
+        
         self.keyboard_notes = ['j','k','l','a','s','d','h','j','k','l','a','s','d','h','j','k','l','a','s']
 
-        self.notes_1 = self.random_note()
-        self.notes_2 = self.random_note()
+        self.notes_list_F = ['1B','1C','1D','E','F','G','A','B','C','D','E1','F1','G1','A1','B1','C1','D1','E2','F2']
+        self.simp_notes_list_F = ['B','C','D','E','F','G','A','B','C','D','E','F','G','A','B','C','D','E','F']
+
+        self.keyboard_notes_F = ['l','a','s','d','h','j','k','l','a','s','d','h','j','k','l','a','s','d','h']
 
         #normal 3->14(+1)
         #complete 0->18(+1)
@@ -16,6 +19,7 @@ class notes_system():
         #if its more or equal to index 15 create 1 suplementary line above, if its more or iqual no index 17, make another one
 
     def random_note(self):
+        key = random.randrange(0,2)
         rand = random.randrange(0, 19)
         sup = 0
         rev = False
@@ -31,22 +35,37 @@ class notes_system():
             
         if rand > 9:
             rev = True
+        
+        if key == 0:
+            key = 'g'
+        elif key == 1:
+            key = 'f'
 
 
-        return [rand, sup, rev]
+        return [rand, sup, rev, key]
 
     def random_key(self):
         rand = random.randrange(1,3)
 
         return rand
     
-    def verify_note(self, asw, quest):
-        asw_index = self.keyboard_notes.index(asw)
-        final_asw = self.simp_notes_list[asw_index]
-        
-        if final_asw == self.simp_notes_list[quest]:
-            return True
-        else:
-            return False
+    def verify_note(self, asw, quest, type_key='g'):
+        if type_key == 'g':
+            asw_index = self.keyboard_notes.index(asw)
+            final_asw = self.simp_notes_list[asw_index]
+            
+            if final_asw == self.simp_notes_list[quest]:
+                return True
+            else:
+                return False
+        elif type_key == 'f':
+            print('Enter f key')
+            asw_index = self.keyboard_notes_F.index(asw)
+            final_asw = self.simp_notes_list_F[asw_index]
+            print(f'quest:{quest}\nasw:{asw}\ntype_key: {type_key}\nasw_index:{asw_index}\nfinal_asw:{final_asw}')
+            if final_asw == self.simp_notes_list_F[quest]:
+                return True
+            else:
+                return False
 
 notes_system()
