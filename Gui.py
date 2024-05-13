@@ -64,10 +64,15 @@ class Screen(ctk.CTkFrame):
         ctk.CTkLabel(self.msg_frame, text="SELECT AN TASK", font=('Roboto', 30, 'bold'), text_color="#454545", bg_color="#2F2F2F").place(relx=0.5, rely=0.475, anchor='center')
 
     def alph_on(self):
+        self.key_solp_button.configure(state=tk.DISABLED)
+        self.key_alph_button.configure(state=tk.NORMAL)
+
         self.apbt_notation_var.set(True)
         self.solp_notation_var.set(False)
     
     def alph_off(self):
+        self.key_alph_button.configure(state=tk.DISABLED)
+        self.key_solp_button.configure(state=tk.NORMAL)
         self.apbt_notation_var.set(False)
         self.solp_notation_var.set(True)
 
@@ -209,8 +214,12 @@ class Screen(ctk.CTkFrame):
         ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold'), textvariable=self.time_var).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12)
 
         #Reading type
-        self.key_alph_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', image= self.key_g, text='', command=self.alph_off).place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
-        self.key_solp_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold'), command=self.alph_on).place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        self.key_alph_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', text='SOL', font=('Roboto', 35, 'bold'), command=self.alph_off)
+        self.key_alph_button.place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+        self.key_solp_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold'), command=self.alph_on)
+        self.key_solp_button.place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
+
+        self.key_alph_button.configure(state=tk.DISABLED)
         
         #Extras lines
         ctk.CTkLabel(self.settings_frame, text='Extras lines', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.55, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
@@ -290,7 +299,7 @@ class Screen(ctk.CTkFrame):
             b_button = ctk.CTkButton(self.mode1_frame, text='SI', bg_color='transparent', fg_color="#D9D9D9", font=('Roboto', 30, 'bold'),hover_color="#A0A0A0", text_color='#2F2F2F', command= lambda: self.get_answer_note('l')).place(relx=0.81, rely=0.50, relwidth=0.08, relheight=0.12, anchor='nw')
 
 
-        exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT', command= lambda: print("Exit")).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
+        exit_button = ctk.CTkButton(self.mode1_frame, bg_color='transparent', fg_color='#464646', text='EXIT',  command= lambda: self.back_to_mainmenu(self.mode1_frame)).place(relx=0.02, rely=0.85, relwidth=0.08, relheight=0.12, anchor='nw')
         self.mode1_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
     def resume_mode1(self):
