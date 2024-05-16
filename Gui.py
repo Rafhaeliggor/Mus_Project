@@ -22,6 +22,7 @@ class Screen(ctk.CTkFrame):
         self.solp_notation_var = tk.BooleanVar()
         self.extra_lines_var = tk.BooleanVar()
         self.f_key_var_able = tk.BooleanVar()
+        self.f_key_var_able.set(False)
 
         self.rounds_var.set(20)
         self.time_var.set(120)
@@ -183,6 +184,9 @@ class Screen(ctk.CTkFrame):
     def new_notes_key(self):
         self.new_note = logic.notes_system()
         self.note_list = self.new_note.random_note()
+        print(f'Value of the variable: {self.f_key_var_able.get()}')
+        if self.f_key_var_able.get() == False:
+            self.note_list[3] = 'g'
 
     def reset_canvas(self, answer = False):
         self.blank_canvas()

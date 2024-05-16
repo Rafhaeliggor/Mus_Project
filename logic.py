@@ -62,7 +62,7 @@ class notes_system():
             print('Enter f key')
             asw_index = self.keyboard_notes_F.index(asw)
             final_asw = self.simp_notes_list_F[asw_index]
-            print(f'quest:{quest}\nasw:{asw}\ntype_key: {type_key}\nasw_index:{asw_index}\nfinal_asw:{final_asw}')
+            #print(f'quest:{quest}\nasw:{asw}\ntype_key: {type_key}\nasw_index:{asw_index}\nfinal_asw:{final_asw}')
             if final_asw == self.simp_notes_list_F[quest]:
                 return True
             else:
