@@ -23,6 +23,9 @@ class Screen(ctk.CTkFrame):
         self.extra_lines_var = tk.BooleanVar()
         self.f_key_var_able = tk.BooleanVar()
 
+        self.rounds_var.set(20)
+        self.time_var.set(120)
+
         self.points = 0
         self.total_tasks = 0
         self.tasks_completed = 0
