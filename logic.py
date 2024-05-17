@@ -18,24 +18,35 @@ class notes_system():
         #if note less or equal to index 3, make 1 suplementary line bellow, if its less or igual to 1, make another one
         #if its more or equal to index 15 create 1 suplementary line above, if its more or iqual no index 17, make another one
 
-    def random_note(self):
-        key = random.randrange(0,2)
-        rand = random.randrange(0, 19)
-        sup = 0
-        rev = False
-        if rand <= 3:
-            sup = -1
-            if rand <=1:
-                sup = -2
+    def random_note(self, extras=False):
+        if extras == True:
+            key = random.randrange(0,2)
+            rand = random.randrange(0, 19)
+            sup = 0
+            rev = False
+            if rand <= 3:
+                sup = -1
+                if rand <=1:
+                    sup = -2
 
-        if rand >= 15:
-            sup = 1
-            if rand >= 17:
-                sup = 2
+            if rand >= 15:
+                sup = 1
+                if rand >= 17:
+                    sup = 2
+                
+            if rand > 9:
+                rev = True
             
-        if rand > 9:
-            rev = True
-        
+            
+        elif extras == False:
+            key = random.randrange(0,2)
+            rand = random.randrange(4, 15)
+            sup = 0
+            rev = False
+
+            if rand > 9:
+                rev = True
+            
         if key == 0:
             key = 'g'
         elif key == 1:
