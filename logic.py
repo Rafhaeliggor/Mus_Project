@@ -1,4 +1,6 @@
 import random
+import pygame.midi
+
 
 class notes_system():
     def __init__(self):
@@ -8,7 +10,7 @@ class notes_system():
         
         self.keyboard_notes = ['j','k','l','a','s','d','h','j','k','l','a','s','d','h','j','k','l','a','s']
 
-        self.notes_list_F = ['1B','1C','1D','E','F','G','A','B','C','D','E1','F1','G1','A1','B1','C1','D1','E2','F2']
+        self.notes_list_F = ['2B','2C','1D','1E','1F','1G','1A','1B','C','D','E','F','G','A','B','C1','D1','E1','F1']
         self.simp_notes_list_F = ['B','C','D','E','F','G','A','B','C','D','E','F','G','A','B','C','D','E','F']
 
         self.keyboard_notes_F = ['l','a','s','d','h','j','k','l','a','s','d','h','j','k','l','a','s','d','h']
@@ -79,4 +81,28 @@ class notes_system():
             else:
                 return False
 
-notes_system()
+class SfxAudio():
+    def __init__(self):
+        pygame.midi.init()
+        self.player = pygame.midi.Output(0)
+        self.notes = {
+            'C': 60,
+            'D': 62,
+            'E': 64,
+            'F': 65,
+            'G': 67,
+            'A': 69,
+            'B': 71
+        }
+
+    def play_note(self, note, parent):
+        self.player.note_on(self.notes[note], 127)  # 127 = velocity
+        parent.after(500, lambda: self.player.note_off(self.notes[note], 127))  # Para a nota após 500ms
+
+    # Finaliza pygame
+    def close(self):
+        self.player.close()
+        pygame.midi.quit()
+
+
+

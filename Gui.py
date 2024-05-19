@@ -186,6 +186,8 @@ class Screen(ctk.CTkFrame):
         self.note_list = self.new_note.random_note(extras=self.extra_lines_var.get())
         if self.f_key_var_able.get() == False:
             self.note_list[3] = 'g'
+        test = logic.SfxAudio()
+        test.play_note('C', parent=self.parent)
 
     def reset_canvas(self, answer = False):
         self.blank_canvas()
