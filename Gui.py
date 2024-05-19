@@ -226,6 +226,10 @@ class Screen(ctk.CTkFrame):
         self.key_solp_button.place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
 
         self.key_alph_button.configure(state=tk.DISABLED)
+
+        #Exit button
+        self.home_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', text='BACK TO HOME', font=('Roboto', 10, 'bold'), command= lambda: self.back_to_mainmenu(self.settings_frame))
+        self.home_button.place(relheight=0.08, relwidth=0.10, relx=0.05, rely=0.05, anchor='nw')
         
         #Extras lines
         ctk.CTkLabel(self.settings_frame, text='Extras lines', bg_color='transparent', fg_color='transparent', font=('Roboto', 30, 'bold')).place(relx=0.55, rely=0.32, relwidth=0.25, relheight=0.12, anchor='nw')
@@ -266,6 +270,7 @@ class Screen(ctk.CTkFrame):
             self.tasks_completed = 0 
             self.total_tasks = self.rounds_var.get()
             self.settings_screen(self.resume_screen)
+            
 
     def counter(self, time, reset = False):
         if time > 0:
