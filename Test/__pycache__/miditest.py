@@ -1,13 +1,13 @@
 import customtkinter as ctk
 import pygame.midi
 
-# Inicializa o pygame.midi
+# inicialise pygame
 pygame.midi.init()
 
-# Configura o dispositivo de saída MIDI
+# simple configuration
 player = pygame.midi.Output(0)
 
-# Notas MIDI
+# Notes liv
 notes = {
     'C': 60,
     'D': 62,
@@ -18,20 +18,17 @@ notes = {
     'B': 71
 }
 
-# Função para reproduzir o som da nota
+#sound output function
 def play_note(note):
-    player.note_on(notes[note], 127)  # Inicia a nota com velocidade 127 (máxima)
-    app.after(500, lambda: player.note_off(notes[note], 127))  # Para a nota após 500ms
+    player.note_on(notes[note], 127)  #127 = velocity
+    app.after(500, lambda: player.note_off(notes[note], 127))  # stops the note after 500ms
 
-# Configura o CustomTkinter
-ctk.set_appearance_mode("dark")  # Modo de aparência
-ctk.set_default_color_theme("blue")  # Tema de cor
 
 app = ctk.CTk()  # Cria a janela principal
 app.geometry("300x400")
 app.title("Piano MIDI")
 
-# Cria botões para cada nota
+#buttons for each note
 buttons = {}
 for note in notes:
     button = ctk.CTkButton(app, text=note, command=lambda n=note: play_note(n))
@@ -40,5 +37,5 @@ for note in notes:
 
 app.mainloop()
 
-# Finaliza o pygame.midi
+#finish pygame
 pygame.midi.quit()

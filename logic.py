@@ -1,6 +1,6 @@
 import random
-import pygame.midi
-import midi
+import mido
+import time
 
 
 class notes_system():
@@ -82,10 +82,9 @@ class notes_system():
             else:
                 return False
 
-class SfxAudio():
+class SfxAudio:
     def __init__(self):
-        pygame.midi.init()
-        self.player = pygame.midi.Output(0)
+        self.output = mido.open_output()  
         self.notes = {
             'C': 60,
             'D': 62,
@@ -96,14 +95,13 @@ class SfxAudio():
             'B': 71
         }
 
-    def play_note(self, note, parent):
-        self.player.note_on(self.notes[note], 127)  # 127 = velocity
-        parent.after(500, lambda: self.player.note_off(self.notes[note], 127))  # Para a nota após 500ms
+    def play_note(self, note):
+        note_number = self.notes[note]
+        on_message = mido.Message('note_on', note=note_number, velocity=127)
+        off_message = mido.Message('note_off', note=note_number, velocity=127)
+        self.output.send(on_message)
+        time.sleep(0.5)  
+        self.output.send(off_message)
 
-    # Finaliza pygame
     def close(self):
-        self.player.close()
-        pygame.midi.quit()
-
-
-
+        self.output.close()
