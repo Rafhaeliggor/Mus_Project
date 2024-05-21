@@ -1,5 +1,6 @@
 import random
 import pygame.midi
+import midi
 
 
 class notes_system():
