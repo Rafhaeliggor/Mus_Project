@@ -84,6 +84,7 @@ class notes_system():
 
 class SfxAudio:
     def __init__(self):
+        self.simp_notes_list = ['G','A','B','C','D','E','F','G','A','B','C','D','E','F','G','A','B','C','D']
         self.output = mido.open_output()  
         self.notes = {
             'C': 60,
@@ -95,7 +96,8 @@ class SfxAudio:
             'B': 71
         }
 
-    def play_note(self, note):
+    def play_note(self, note_rand):
+        note = self.simp_notes_list[note_rand]
         note_number = self.notes[note]
         on_message = mido.Message('note_on', note=note_number, velocity=127)
         off_message = mido.Message('note_off', note=note_number, velocity=127)

@@ -188,7 +188,7 @@ class Screen(ctk.CTkFrame):
             self.note_list[3] = 'g'
 
         test = logic.SfxAudio()
-        test.play_note('C')
+        test.play_note(self.note_list[0])
         test.close()
         
     def reset_canvas(self, answer = False):
