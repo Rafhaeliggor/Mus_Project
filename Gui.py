@@ -35,12 +35,12 @@ class Screen(ctk.CTkFrame):
 
         #G_key_img
         p_img = Image.open("img/key_G_canvas.png")
-        p_img_red = p_img.resize((155, 155), Image.ANTIALIAS)   
+        p_img_red = p_img.resize((155, 155))   
         self.key_p = ImageTk.PhotoImage(p_img_red)
 
         #F_key_img
         p2_img = Image.open("img/F_key_png.png")
-        p2_img_red = p2_img.resize((61, 61), Image.ANTIALIAS)   
+        p2_img_red = p2_img.resize((61, 61))   
         self.key_f = ImageTk.PhotoImage(p2_img_red)
 
         g_img = Image.open("img/key_simbol.png")
@@ -56,7 +56,7 @@ class Screen(ctk.CTkFrame):
         sphere.create_aa_circle(fill='#D9D9D9',x_pos=100,y_pos=100,radius=95)
         sphere.pack(pady=15)
 
-        button_task1 = ctk.CTkButton(sidebar_var,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text=f'Read Pentagram', command = lambda: self.settings_screen(deleted_screen=self.msg_frame), text_color="#454545").pack(pady=4)
+        button_task1 = ctk.CTkButton(sidebar_var,hover_color="#A0A0A0", fg_color="#D9D9D9", width=200, height=70, text=f'Read Pentagram', command = lambda: self.settings_screen(deleted_screen=self.msg_frame, task="mode1"), text_color="#454545").pack(pady=4)
 
         ctk.CTkButton(sidebar_var, hover_color="#A0A0A0" ,text="Leave", height=100, width=100, fg_color='#D9D9D9', text_color="#454545", command= lambda: self.quit()).place(relx= 0.7, rely=0.9, relwidth=0.25, relheight=0.09, anchor='nw')
     
@@ -161,7 +161,7 @@ class Screen(ctk.CTkFrame):
             if verify == True:
                 self.add_points()
             elif (verify == False):
-                print('Wrong')
+                print('')
             
             ask_continue = self.continue_check()
             if ask_continue == True:
@@ -207,7 +207,7 @@ class Screen(ctk.CTkFrame):
         self.points_var_label.configure(text=f'Points: {self.points}')
 
 
-    def settings_screen(self, deleted_screen):
+    def settings_screen(self, deleted_screen, task):
         self.delete_general_screen(deleted_screen)
         self.settings_frame = ctk.CTkFrame(self.parent, bg_color='#2F2F2F', fg_color='#2F2F2F')
 
@@ -244,7 +244,7 @@ class Screen(ctk.CTkFrame):
         ctk.CTkSwitch(self.settings_frame,text='', corner_radius=5.5, switch_height=83, switch_width=180, button_length=70, variable=self.f_key_var_able).place(relx=0.60, rely=0.625, relwidth=0.25, relheight=0.12, anchor='nw')
 
         #Start
-        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command = lambda: self.change_screen('mode1')).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
+        ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', font=('Roboto', 50, 'bold'), text= 'Start', command = lambda: self.change_screen(task)).place(relx=0.70, rely=0.79, relwidth=0.20, relheight=0.12, anchor='nw')
 
         self.settings_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
@@ -273,7 +273,7 @@ class Screen(ctk.CTkFrame):
             self.points = 0
             self.tasks_completed = 0 
             self.total_tasks = self.rounds_var.get()
-            self.settings_screen(self.resume_screen)
+            self.settings_screen(self.resume_screen, task="mode1")
             
 
     def counter(self, time, reset = False):
@@ -281,7 +281,6 @@ class Screen(ctk.CTkFrame):
             self.counter_label.configure(text= f'Time: {time}')
             self.after(1000, lambda: self.counter(time - 1))
         else:
-            print(f'Time get: {self.time_var.get()}')
             self.tasks_completed = self.total_tasks
             self.resume_mode1()
 
