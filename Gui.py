@@ -7,11 +7,11 @@ import ctypes
 import logic
 
 class Screen(ctk.CTkFrame):
+#inicialiization
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
         ctk.CTkFrame(parent, fg_color='#2F2F2F', bg_color='#2F2F2F').pack(fill="both", expand=True)
-
 
         self.counter_running = False
 
@@ -49,6 +49,7 @@ class Screen(ctk.CTkFrame):
 
         
     def sidebar(self):
+        #build sidebar interaction
         sidebar_var = ctk.CTkFrame(self.parent, width=200, height= 200, fg_color="#464646", bg_color="#2F2F2F")
         sidebar_var.place(relx = 0.81, rely= 0.025, relheight=0.95, relwidth=0.18, anchor='nw')
 
@@ -61,24 +62,27 @@ class Screen(ctk.CTkFrame):
         ctk.CTkButton(sidebar_var, hover_color="#A0A0A0" ,text="Leave", height=100, width=100, fg_color='#D9D9D9', text_color="#454545", command= lambda: self.quit()).place(relx= 0.7, rely=0.9, relwidth=0.25, relheight=0.09, anchor='nw')
     
     def welcome_msg(self):
+        #Home screen
         self.msg_frame = ctk.CTkFrame(self.parent, fg_color='#2F2F2F', bg_color='#2F2F2F')
         self.msg_frame.place(relx = 0, rely =0, relheight=1, relwidth=0.8)
 
         ctk.CTkLabel(self.msg_frame, text="WELCOME", font=('Roboto', 80, 'bold'), text_color="#454545", bg_color="#2F2F2F").place(relx=0.5, rely= 0.4, anchor='center')
         ctk.CTkLabel(self.msg_frame, text="SELECT AN TASK", font=('Roboto', 30, 'bold'), text_color="#454545", bg_color="#2F2F2F").place(relx=0.5, rely=0.475, anchor='center')
 
-    def alph_on(self):
-        self.key_solp_button.configure(state=tk.DISABLED)
-        self.key_alph_button.configure(state=tk.NORMAL)
+    def alph_setting(self, mode):
+        if mode == True:
+            self.key_solp_button.configure(state=tk.DISABLED)
+            self.key_alph_button.configure(state=tk.NORMAL)
 
-        self.apbt_notation_var.set(True)
-        self.solp_notation_var.set(False)
-    
-    def alph_off(self):
-        self.key_alph_button.configure(state=tk.DISABLED)
-        self.key_solp_button.configure(state=tk.NORMAL)
-        self.apbt_notation_var.set(False)
-        self.solp_notation_var.set(True)
+            self.apbt_notation_var.set(True)
+            self.solp_notation_var.set(False)
+
+        elif mode == False:
+            self.key_alph_button.configure(state=tk.DISABLED)
+            self.key_solp_button.configure(state=tk.NORMAL)
+            self.apbt_notation_var.set(False)
+            self.solp_notation_var.set(True)
+
 
     def create_canvas_base(self, parent):
         #pentagram
@@ -224,9 +228,9 @@ class Screen(ctk.CTkFrame):
         ctk.CTkEntry(self.settings_frame, bg_color='#2F2F2F', font=('Roboto', 40, 'bold'), textvariable=self.time_var).place(relx=0.10, rely=0.62, relwidth=0.25, relheight=0.12)
 
         #Reading type
-        self.key_alph_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', text='SOL', font=('Roboto', 35, 'bold'), command=self.alph_off)
+        self.key_alph_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F', fg_color='#464646', text='SOL', font=('Roboto', 35, 'bold'), command= lambda: self.alph_setting(mode=False))
         self.key_alph_button.place(relx=0.12, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
-        self.key_solp_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold'), command=self.alph_on)
+        self.key_solp_button = ctk.CTkButton(self.settings_frame, bg_color='#2F2F2F',  fg_color='#464646', text='G', font=('Roboto', 60, 'bold'), command= lambda: self.alph_setting(mode=True))
         self.key_solp_button.place(relx=0.25, rely=0.79, relwidth=0.08, relheight=0.12, anchor='nw')
 
         self.key_alph_button.configure(state=tk.DISABLED)
